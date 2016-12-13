@@ -10,6 +10,8 @@ Revision history for Perl extension Apache2::FileManager.
   - Bug Fix, execute_cmds(), Undefined $cmd  [ DONE ]
   - Bug Fix, html_file_list(), Undefined $type  [ DONE ]
   - Reverse Order Of Changes File Entries  [ DONE ]
+  - Enable Stand-Alone Plack PSGI Support, Thanks To Peter Sergeant  [ DONE ]
+  - Enable Catalyst    Plack PSGI Support  [ DONE ]
 
 0.20 David Aguilar
   - Updated to Apache2/mod_perl2

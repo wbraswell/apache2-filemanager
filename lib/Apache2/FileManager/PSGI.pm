@@ -1,4 +1,12 @@
+# [[[ PREPROCESSOR ]]]
+# <<< TYPE_CHECKING: OFF >>>
+
+# [[[ HEADER ]]]
 package Apache2::FileManager::PSGI;
+use strict;
+use warnings;
+#use RPerl::AfterSubclass;
+our $VERSION = 0.001_000;
 
 BEGIN {
     for (

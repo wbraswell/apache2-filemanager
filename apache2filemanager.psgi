@@ -1,5 +1,7 @@
+# [[[ HEADER ]]]
 use strict;
 use warnings;
+our $VERSION = 0.001_000;
 
 use Plack::Request;
 use Plack::Builder;
