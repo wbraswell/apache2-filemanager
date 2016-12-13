@@ -1,42 +1,37 @@
-package Plack::App::Apache2FileManager;
-
 use strict;
 use warnings;
 
 use Plack::Request;
-use Plack::App::Apache2FileManager::Mocks;
-use Apache2::FileManager;
 use Plack::Builder;
+use Apache2::FileManager::PSGI;
+use Apache2::FileManager;
+#use Data::Dumper;
 
+# local variables
 my $document_root = '/tmp';
+my $request_wrapped_psgi;
 
-our $R;
-our $CONFIG;
-
+# override $r with $request_wrapped_psgi, thereby wrapping $r
 undef *Apache2::FileManager::r;
-*Apache2::FileManager::r = sub { return $R };
+*Apache2::FileManager::r = sub { return $request_wrapped_psgi };
 
+# create new $request_wrapped_psgi, generate HTML
 my $app = sub {
     my $env = shift;
-    my $req = Plack::Request->new($env);
-
-    local $R = Plack::App::Apache2FileManager::Mocks->new(
-        {   request       => $req,
-            document_root => $document_root
-        }
-    );
-    local $CONFIG = {};
+    $request_wrapped_psgi = Apache2::FileManager::PSGI::new_from_psgi($env, $document_root);
+#    print {*STDERR} 'in $app(), have $request_wrapped_psgi = ', Dumper($request_wrapped_psgi), "\n\n";
 
     # DEV NOTE: r->print() is     called in handler()         and calls therefrom, returns Apache2::Const::OK
 #    Apache2::FileManager->handler();
 
     # DEV NOTE: r->print() is not called in handler_noprint() or  calls therefrom, returns generated HTML
     my $handler_retval = Apache2::FileManager->handler_noprint();
-    $R->print($handler_retval);
+    $request_wrapped_psgi->print($handler_retval);
 
-    return $R->response->finalize;
+    return $request_wrapped_psgi->response->finalize;
 };
 
+# enable static files
 builder {
     enable "Plack::Middleware::Static",
         path => qr{^/.+},
