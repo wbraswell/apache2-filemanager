@@ -1398,7 +1398,7 @@ sub html_cmd_toolbar {
     "<A HREF=# onclick=\"
         window.print_upload();
         return false;\"
-        ><FONT COLOR=WHITE><B>upload<B></FONT></A>"
+        ><FONT COLOR=WHITE><B>upload</B></FONT></A>"
   );
 
   #Rsync
