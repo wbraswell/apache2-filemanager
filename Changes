@@ -1,7 +1,6 @@
 Revision history for Perl extension Apache2::FileManager.
 
 0.30 Will Braswell
-  - Fix Bug Report From 2009  https://rt.cpan.org/Public/Bug/Display.html?id=50391  [ DONE, NEED CLOSE TICKET ]
   - Bug Fix, test.pl, Wrongly Included A::FM Instead Of A2::FM  [ DONE ]
   - Bug Fix, initialize(), Undefined $curr_dir  [ DONE ]
   - Bug Fix, html_to_javascript(), Undefined $curr_dir  [ DONE ]
@@ -9,7 +8,12 @@ Revision history for Perl extension Apache2::FileManager.
   - Bug Fix, html_hidden_fields(), Undefined $curr_dir & $last_select_all  [ DONE ]
   - Bug Fix, execute_cmds(), Undefined $cmd  [ DONE ]
   - Bug Fix, html_file_list(), Undefined $type  [ DONE ]
+  - Bug Fix, html_file_list(), Permission Denied (Unreadable File)  [ DONE ]
+  - Bug Fix, html_file_list(), Not A File Or Directory (Unrecognized File)  [ DONE ]
+  - Bug Fix, html_file_list(), No Files Found Full Size COLSPAN (Empty Directory)  [ DONE ]
+  - Bug Fix, After Extract Or Delete, Can't Load Files  [ DONE ]
   - Bug Fix, '<B>upload<B>' should be '<B>upload</B>'  [ DONE ]
+  - Clarification, Rename & Move Are The Same Command [ DONE ]
   - Reverse Order Of Changes File Entries  [ DONE ]
   - Enable Stand-Alone Plack PSGI Support, Thanks To Peter Sergeant  [ DONE ]
   - Enable Catalyst    Plack PSGI Support  [ DONE ]

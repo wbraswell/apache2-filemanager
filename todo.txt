@@ -1,0 +1,14 @@
+  - Fix Bug Report From 2009  https://rt.cpan.org/Public/Bug/Display.html?id=50391  [ DONE, NEED CLOSE TICKET ]
+
+  - Bug Fix, Edit File  [ TO DO ]
+        opens new file manager window, does nothing
+  - Bug Fix, New File  [ TO DO ]
+        opens new file manager window, does nothing
+  - Bug Fix, Upload File  [ TO DO ]
+        opens new file manager window, does nothing
+  - Bug Fix, Copy & Cut & Paste  [ TO DO ]
+        ERROR: Can't locate object method "headers_in" via package "Apache2::FileManager::PSGI" at lib/Apache2/FileManager.pm line 1710
+  - Bug Fix, DOCUMENT_ROOT  [ TO DO ]
+        when you set $CONFIG->{DOCUMENT_ROOT} to an invalid value in new_from_psgi() or elsewhere
+        ERROR: Can't locate object method "log_error" via package "Apache2::FileManager::PSGI"
+  - Enable FastCGI Support  [ TO DO ]

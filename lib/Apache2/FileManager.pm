@@ -1327,14 +1327,14 @@ sub html_cmd_toolbar {
         return false; \"
         ><FONT COLOR=WHITE><B>delete</B></FONT></A>",
 
-    #Rename
+    #Rename or Move
     "<A HREF=# onclick=\"
         var f=window.document.FileManager;
         if (get_num_checked() != 1) {
-          window.alert('Please select ONE file to rename by clicking on a '+
+          window.alert('Please select ONE file to rename or move by clicking on a '+
                        'check box with the mouse.');
         } else {
-          var rv=window.prompt('enter new name','');
+          var rv=window.prompt('enter new file name and/or destination directory','');
           if ((rv != null) && (rv != '')) {
             f.FILEMANAGER_cmd.value='rename';
             f.FILEMANAGER_arg.value=rv;
@@ -1342,7 +1342,7 @@ sub html_cmd_toolbar {
           }
         }
         return false;\"
-        ><FONT COLOR=WHITE><B>rename</B></FONT></A>",
+        ><FONT COLOR=WHITE><B>rename/move</B></FONT></A>",
 
     #Extract
     "<A HREF=# onclick=\"
@@ -1478,19 +1478,27 @@ sub html_file_list {
       $last_modified = "--";
       $size = "<TD ALIGN=CENTER>--</TD>";
       $type = "/"; # "/" designates "directory"
-      $link = "<A HREF=#
-                onclick=\"
-                  var f=window.document.FileManager;
-                  f.FILEMANAGER_curr_dir.value='"
-                      .Apache2::Util::escape_path($curr_dir.$file, r->pool)."';
-                  f.submit();
-                  return false;\">
-                <FONT COLOR=#006699>$file$type</FONT></A>";
+      if ((-r $file) and (-x $file)) {  # The Truth Is Still Out There
+          $link = "<A HREF=#
+                    onclick=\"
+                      var f=window.document.FileManager;
+                      f.FILEMANAGER_curr_dir.value='"
+                          .Apache2::Util::escape_path($curr_dir.$file, r->pool)."';
+                      f.submit();
+                      return false;\">
+                    <FONT COLOR=#006699>$file$type</FONT></A>";
+      }
+      else {
+          $link = "<A HREF=#
+                    onclick=\"
+                      alert('Permission Denied');
+                      return false;\">
+                    <FONT COLOR=#555555>$file$type</FONT></A>";
+      }
     }
 
-    #must be a file
+    # may be a file
     elsif (-f $file) {
-
       #get file size
       my $stat = stat($file);
       $size = $stat->size;
@@ -1508,10 +1516,12 @@ sub html_file_list {
       $last_modified = $o->formated_date($stat->mtime);
 
       #get file type
-      if (-S $file) {
-        $type = '='; # "=" designates "socket"
-      }
-      elsif (-l $file) {
+      # disable sockets for now
+      #if (-S $file) {
+      #  $type = '='; # "=" designates "socket"
+      #}
+      #elsif (-l $file) {
+      if (-l $file) {
         $type = '@'; # "@" designates "link"
       }
       elsif (-x $file) {
@@ -1521,21 +1531,43 @@ sub html_file_list {
           $type = q{};
       }
 
-      my $true_doc_root = r->document_root;
-      my $fake_doc_root = $$o{DR};
-      $fake_doc_root =~ s/^$true_doc_root//;
-      $fake_doc_root =~ s/^\///; $fake_doc_root =~ s/\/$//;
-
-      my $href = $curr_dir;
-      $href = $fake_doc_root."/".$href if $fake_doc_root;
-
-      $link = "
-          <A HREF=\"/$href" .
-          "$file?nossi=1\"
-             TARGET=_blank><FONT COLOR=BLACK>" .
-          Apache2::Util::escape_path($file.$type, r->pool) .
-          "</FONT>
-          </A>";
+      if (-r $file) {
+          my $true_doc_root = r->document_root;
+          my $fake_doc_root = $$o{DR};
+          $fake_doc_root =~ s/^$true_doc_root//;
+          $fake_doc_root =~ s/^\///; $fake_doc_root =~ s/\/$//;
+    
+          my $href = $curr_dir;
+          $href = $fake_doc_root."/".$href if $fake_doc_root;
+          if ((substr $href, 0, 1) eq '/') { substr $href, 0, 1, q{}; }  # trim leading / to fix broken links
+          
+#          print {*STDERR} 'in html_file_list(), have $href = ', $href, "\n";
+    
+          $link = "
+              <A HREF=\"/$href" .
+              "$file?nossi=1\"
+                 TARGET=_blank><FONT COLOR=BLACK>" .
+              Apache2::Util::escape_path($file.$type, r->pool) .
+              "</FONT>
+              </A>";
+      }
+      else {
+          $link = "<A HREF=#
+                    onclick=\"
+                      alert('Permission Denied');
+                      return false;\">
+                    <FONT COLOR=#555555>$file$type</FONT></A>";
+      }
+    }
+    else {      
+      $last_modified = "--";
+      $size = "<TD ALIGN=CENTER>--</TD>";
+      $type = "???";
+          $link = "<A HREF=#
+                    onclick=\"
+                      alert('Not A File Or Directory');
+                      return false;\">
+                    <FONT COLOR=#555555>$file$type</FONT></A>";
     }
 
     $acum .= "
@@ -1554,7 +1586,7 @@ sub html_file_list {
   #print a message if there were no files in this directory
   if ($ct_rows == 0) {
     $acum .= "
-        <TR ALIGN=CENTER><TD COLSPAN=3>
+        <TR ALIGN=CENTER><TD COLSPAN=4>
           <TABLE BORDER=1 WIDTH=100% BGCOLOR=WHITE>
             <TR>
               <TD ALIGN=CENTER><BR><I>no files found</I><BR><BR></TD>
