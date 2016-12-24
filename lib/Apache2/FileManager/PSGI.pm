@@ -62,6 +62,12 @@ sub new_from_psgi {
 
 sub pool { }
 
+sub upload {
+    my ( $self, $param ) = @_;
+    my $plack_request_upload = $self->request->uploads->{$param};
+    return $plack_request_upload;
+}
+
 sub log_error {
     my $self = shift;
     warn shift;

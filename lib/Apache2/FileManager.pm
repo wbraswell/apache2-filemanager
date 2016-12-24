@@ -1843,36 +1843,18 @@ sub cmd_upload {
   my $count = 0;
 
   foreach my $i (1 .. 10) {
-    my @ar = split /\/|\\/, r->param("FILEMANAGER_file$i");
-    next if ($#ar == -1);
-    my $filename = pop @ar;
+    my $upload = r->upload("FILEMANAGER_file$i") || next;
+
+    my $filename = $upload->filename;
     $filename =~ s/[^\w\ \d\.\-]//g;
     next if ($filename eq "");
 
     $count++;
 
-    my $up = r->upload("FILEMANAGER_file$i");
-    #next if not defined $up;
-
-    #my $in_fh = $up->fh;
-    #next if !defined $in_fh;
-
     my $path = $$o{DR}."/".r->param('FILEMANAGER_curr_dir')."/".$filename;
-    $up->link($path);
-
-    #my $arg = "> ".$$o{DR}."/".r->param('FILEMANAGER_curr_dir')."/".$filename;
-    #my $out_fh;
-    #open($out_fh, $arg)
-    #  or die "ERROR: cannot open '$arg'";
-
-    #next if not defined $out_fh;
-
-    #while (<$in_fh>) {
-    #  print $out_fh $_;
-    #}
-    #close($out_fh);
-
+    move( $upload->path, $path );
   }
+
   #$$o{MESSAGE} = "$count file(s) uploaded.";
   $$o{'view'} = "post_upload";
   return undef;
