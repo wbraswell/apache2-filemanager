@@ -1669,7 +1669,7 @@ sub execute_cmds {
   my $o = shift;
   my $cmd = r->param('FILEMANAGER_cmd');
   my $arg = r->param('FILEMANAGER_arg');
-  if ((defined $cmd) and (defined $arg)) {
+  if ( $cmd ) {
     my $method = "cmd_$cmd";
     if ($o->can($method)) {
       $o->$method($arg);

@@ -60,7 +60,17 @@ sub new_from_psgi {
     return $request_wrapped_psgi;
 }
 
-sub pool {}
+sub pool { }
+
+sub log_error {
+    my $self = shift;
+    warn shift;
+}
+
+sub headers_in {
+    my $self = shift;
+    return { Cookie => $self->request->headers->{'cookie'} };
+}
 
 sub hostname {
     my $self = shift;
@@ -77,10 +87,17 @@ sub dir_config {
     return $self->{dir_config_var}->{$key};
 }
 
+my $charset
+    = '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />';
+
 sub print {
-    my ($self, $content) = @_;
+    my ( $self, $content ) = @_;
     my $body = $self->response->body // '';
-    $self->response->body( $body . $content );
+    my $all = $body . $content;
+    ( $all =~ s!(\<HTML\>\<HEAD\>)!$1$charset! )
+        || ( $all =~ s!(\<HTML\>)!$1<HEAD>$charset</HEAD>! )
+        || warn "Unable to add encoding";
+    $self->response->body($all);
     return 1;
 }
 
