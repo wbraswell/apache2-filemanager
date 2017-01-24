@@ -1,0 +1,52 @@
+Return-Path: davvid@gmail.com
+Received: from mip.hushmail.com (LHLO smtp2.hushmail.com) (65.39.178.78) by
+ server with LMTP; Mon, 23 Jan 2017 02:29:37 +0000 (UTC)
+Received: from smtp2.hushmail.com (localhost [127.0.0.1])
+	by smtp2.hushmail.com (Postfix) with SMTP id 65C33A048B
+	for <william.braswell@autoparallel.com>; Mon, 23 Jan 2017 02:29:37 +0000 (UTC)
+X-Hush-Verified-Domain: gmail.com
+X-Hush-Real-Recipient: william.braswell@autoparallel.com
+Received: from mail-wm0-f45.google.com (unknown [74.125.82.45])
+	by smtp2.hushmail.com (Postfix) with ESMTP
+	for <william.braswell@autoparallel.com>; Mon, 23 Jan 2017 02:29:34 +0000 (UTC)
+Received: by mail-wm0-f45.google.com with SMTP id r144so132110912wme.1
+        for <william.braswell@autoparallel.com>; Sun, 22 Jan 2017 18:29:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to;
+        bh=t6E0KqO69T++x7l2uMfHvAR8KOG93WaCUXmYCXsBl+Y=;
+        b=CWQryr9MAb1CZMydg9Hrt9g9Kq1+dV6FIf7TrtVJhK0z9fD1dW4aQYBYPfaYshx9bV
+         2KrImXl4ApgFaqu8j0t/1UIOvz6mo0zOfI/uKo5Ykt+8Pu7fUXqy+/lll2HhiMxRWbur
+         uj3PfcKbr0qiC3jxgXDW+gq2h3mtzouBM3mmZuMoJ5YiGNQgzIuhL0yRNGiOirvNqdyE
+         2V6iHivCHdLLxvWhuqlHRSgL35v/AaNgIgZcLsV7hAD2oq1D9HGal8FJkRReT8qwKXpw
+         bbpiPFp7jp3DLOTEAfpNI8/X3w6svskxUeuOP4q9hlIuuqpbPbD2oTIzz9tv16mbbx4y
+         izgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to;
+        bh=t6E0KqO69T++x7l2uMfHvAR8KOG93WaCUXmYCXsBl+Y=;
+        b=Pr072EGGKNzIgxc2j2bmNf+s3BNqBQ19aVTrJRW68PbrALzIOz3nfIVAXsWZGdHV/0
+         JeS8O+ZSb4/QuoNbTlWVyPwRPGZPu0YLu9E1VeCKCO5YzYAWyg+wqNe5vCSe1EQ78qsH
+         18BRrPLZXPpe+0s6VpUjJtUKNUveLkHUW989gEiD/blqBy0tNzm8/gLhKWBdS9n0G+56
+         auwG5i6Sv3gJKDUgetJGHeZGA+zRLbKekaHT/OA8UW3yBp1krcIMhYndlzF30ueoV9IK
+         pmsFiirJejyXqUw8vMHAzubSvfk76gX8ZDbNu421T80XHr4B3jY94YLgI3wFyi+flxfc
+         vSlg==
+X-Gm-Message-State: AIkVDXLTGhY7BKQKzrSixvVNjpYYVIbBlt1eVhaSgSqJ7OAnb70zCFjbk1hyPqx6i+Z8rAvd9cjnHnp9/5MgkA==
+X-Received: by 10.28.178.16 with SMTP id b16mr12968021wmf.83.1485138572503;
+ Sun, 22 Jan 2017 18:29:32 -0800 (PST)
+MIME-Version: 1.0
+Received: by 10.28.63.136 with HTTP; Sun, 22 Jan 2017 18:29:31 -0800 (PST)
+In-Reply-To: <20170120170302.362BDA0145@smtp.hushmail.com>
+References: <20161111234045.167ECC0567@smtp.hushmail.com> <CAJDDKr68KKs5osZQ6LA200iW80xQtsWg7VCA6BJKXCxtZ38gTQ@mail.gmail.com>
+ <20170120170302.362BDA0145@smtp.hushmail.com>
+From: David Aguilar <davvid@gmail.com>
+Date: Sun, 22 Jan 2017 18:29:31 -0800
+Message-ID: <CAJDDKr4sN1mnXmTRJ_UvjiK1t2CsjJcAk-388nSR2pN_+m5jzw@mail.gmail.com>
+Subject: Re: Apache2::FileManager Copyright
+To: "William N. Braswell, Jr." <william.braswell@autoparallel.com>
+Content-Type: multipart/mixed; boundary=001a11443b840e95340546b9c55d
+
+cheers,
+-- 
+David
